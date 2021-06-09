@@ -1,0 +1,87 @@
+<div *ngIf="currentFile" class="progress">
+  <div
+    class="progress-bar progress-bar-info progress-bar-striped"
+    role="progressbar"
+    attr.aria-valuenow="{{ progress }}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngStyle]="{ width: progress + '%' }"
+  >
+    {{ progress }}%
+  </div>
+</div>
+
+<label class="btn btn-default">
+  <input type="file" (change)="selectFile($event)" />
+</label>
+
+<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">
+  Upload
+</button>
+
+<div class="alert alert-light" role="alert">{{ message }}</div>
+
+<div class="card">
+  <div class="card-header">List of Files</div>
+  <ul
+    class="list-group list-group-flush"
+    *ngFor="let file of fileInfos | async"
+  >
+    <li class="list-group-item">
+      <a href="{{ file.url }}">{{ file.name }}</a>
+      <div id="outer">
+        <div class="inner">
+          <mat-form-field appearance="fill">
+            <mat-label>Source</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let src of source" [value]="src.value">
+                {{src.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="inner">
+          <mat-form-field appearance="fill">
+            <mat-label>Destination</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let dest of destination" [value]="dest.value">
+                {{dest.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+<!--        <div class="inner">-->
+<!--          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            Src-->
+<!--          </button>-->
+<!--          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
+<!--            <li><a class="dropdown-item" href="#">Value 1</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 2</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 3</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 4</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 5</a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="inner">-->
+<!--          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            Dest-->
+<!--          </button>-->
+<!--          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">-->
+<!--            <li><a class="dropdown-item" href="#">Value 1</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 2</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 3</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 4</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Value 5</a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
+        <div class="inner"><button type="submit">Backend Print Console</button></div>
+      </div>
+<!--      <td>-->
+<!--        <button class='dropbtn'>Src</button>&nbsp;-->
+<!--        <button class='dropbtn'>Dest</button>&nbsp;-->
+<!--        <button class='btn btn-info'-->
+<!--                data-toggle="modal" data-target="#myModal">Update</button>-->
+<!--      </td>-->
+    </li>
+  </ul>
+</div>

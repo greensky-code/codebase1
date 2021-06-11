@@ -86,7 +86,7 @@ export class UploadFilesComponent implements OnInit {
 
   fileDetails() {
     console.log(this.finalFileObj);
-    this.uploadService.get(this.finalFileObj).subscribe(response => {
+    this.uploadService.postFile(this.finalFileObj).subscribe(response => {
       console.log(response);
       this.finalFileObj = {
         fileName: '',

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
     AppRoutingModule,
     HttpClientModule,
     MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

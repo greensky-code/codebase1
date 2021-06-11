@@ -29,6 +29,8 @@ export class UploadFileService {
   }
 
   get(name: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files/details/${name}`)
+    // return this.http.get(`${this.baseUrl}/files/details/${name}`)
+    return this.http.get(`${this.baseUrl}/files/details`)
+
   }
 }

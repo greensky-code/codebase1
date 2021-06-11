@@ -19,7 +19,8 @@ interface Destination {
   styleUrls: ['./upload-files.component.css']
 })
 export class UploadFilesComponent implements OnInit {
-
+  selectedSource: any = []
+  selectedDest: any = []
   selectedFiles!: FileList | undefined;
   currentFile!: File | undefined | null;
   progress = 0;
@@ -60,21 +61,53 @@ export class UploadFilesComponent implements OnInit {
   }
 
   source: Source[] = [
-    {value: 'value-0', viewValue: 'Value 0'},
-    {value: 'value-1', viewValue: 'Value 1'},
-    {value: 'value-2', viewValue: 'Value 2'},
-    {value: 'value-3', viewValue: 'Value 3'},
-    {value: 'value-4', viewValue: 'Value 4'}
+    { value: 'value-0', viewValue: 'Value 0' },
+    { value: 'value-1', viewValue: 'Value 1' },
+    { value: 'value-2', viewValue: 'Value 2' },
+    { value: 'value-3', viewValue: 'Value 3' },
+    { value: 'value-4', viewValue: 'Value 4' }
 
   ];
 
   destination: Destination[] = [
-    {value: 'value-0', viewValue: 'Value 0'},
-    {value: 'value-1', viewValue: 'Value 1'},
-    {value: 'value-2', viewValue: 'Value 2'},
-    {value: 'value-3', viewValue: 'Value 3'},
-    {value: 'value-4', viewValue: 'Value 4'}
+    { value: 'value-0', viewValue: 'Value 0' },
+    { value: 'value-1', viewValue: 'Value 1' },
+    { value: 'value-2', viewValue: 'Value 2' },
+    { value: 'value-3', viewValue: 'Value 3' },
+    { value: 'value-4', viewValue: 'Value 4' }
 
   ];
+
+  finalArray = [{
+    fileName: '',
+    dropdownSrc: '',
+    dropdownDest: ''
+  }]
+
+  fileDetails() {
+    console.log(this.finalArray);
+    this.uploadService.get(this.finalArray).subscribe(response => {
+      console.log(response);
+      this.finalArray = [];
+    }, error => {
+      console.log(error);
+      
+    })
+  }
+
+  setSelectedSource(file: any, source: any, index: any) {
+    this.finalArray[index] = {
+      fileName: file,
+      dropdownSrc: source[index],
+      dropdownDest: this.finalArray[index]?.dropdownDest,
+    }
+  }
+  setSelectedDest(file: any, dest: any, index: any) {
+    this.finalArray[index] = {
+      fileName: file,
+      dropdownSrc: this.finalArray[index]?.dropdownSrc,
+      dropdownDest: dest[index]
+    }
+  }
 
 }

@@ -19,8 +19,8 @@ interface Destination {
   styleUrls: ['./upload-files.component.css']
 })
 export class UploadFilesComponent implements OnInit {
-  selectedSource: any = []
-  selectedDest: any = []
+  selectedSource = ''
+  selectedDest = ''
   selectedFiles!: FileList | undefined;
   currentFile!: File | undefined | null;
   progress = 0;
@@ -41,21 +41,21 @@ export class UploadFilesComponent implements OnInit {
   upload(): void {
     this.progress = 0;
 
-    this.currentFile = this.selectedFiles!.item(0);
-    this.uploadService.upload(this.currentFile!).subscribe(
-      event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progress = Math.round(100 * event.loaded / event.total!);
-        } else if (event instanceof HttpResponse) {
-          this.message = event.body.message;
-          this.fileInfos = this.uploadService.getFiles();
-        }
-      },
-      err => {
-        this.progress = 0;
-        this.message = 'Could not upload the file!';
-        this.currentFile = undefined;
-      });
+    // this.currentFile = this.selectedFiles!.item(0);
+    // this.uploadService.upload(this.currentFile!).subscribe(
+    //   event => {
+    //     if (event.type === HttpEventType.UploadProgress) {
+    //       this.progress = Math.round(100 * event.loaded / event.total!);
+    //     } else if (event instanceof HttpResponse) {
+    //       this.message = event.body.message;
+    //       this.fileInfos = this.uploadService.getFiles();
+    //     }
+    //   },
+    //   err => {
+    //     this.progress = 0;
+    //     this.message = 'Could not upload the file!';
+    //     this.currentFile = undefined;
+    //   });
 
     this.selectedFiles = undefined;
   }
@@ -78,35 +78,39 @@ export class UploadFilesComponent implements OnInit {
 
   ];
 
-  finalArray = [{
+  finalFileObj = {
     fileName: '',
     dropdownSrc: '',
     dropdownDest: ''
-  }]
+  }
 
   fileDetails() {
-    console.log(this.finalArray);
-    this.uploadService.get(this.finalArray).subscribe(response => {
+    console.log(this.finalFileObj);
+    this.uploadService.get(this.finalFileObj).subscribe(response => {
       console.log(response);
-      this.finalArray = [];
+      this.finalFileObj = {
+        fileName: '',
+        dropdownSrc: '',
+        dropdownDest: ''
+      }
     }, error => {
       console.log(error);
-      
+
     })
   }
 
-  setSelectedSource(file: any, source: any, index: any) {
-    this.finalArray[index] = {
-      fileName: file,
-      dropdownSrc: source[index],
-      dropdownDest: this.finalArray[index]?.dropdownDest,
+  setSelectedSource(file: any, source: any) {
+    this.finalFileObj = {
+      fileName: file.name,
+      dropdownSrc: source,
+      dropdownDest: this.finalFileObj.dropdownDest
     }
   }
-  setSelectedDest(file: any, dest: any, index: any) {
-    this.finalArray[index] = {
-      fileName: file,
-      dropdownSrc: this.finalArray[index]?.dropdownSrc,
-      dropdownDest: dest[index]
+  setSelectedDest(file: any, dest: any) {
+    this.finalFileObj = {
+      fileName: file.name,
+      dropdownSrc: this.finalFileObj.dropdownSrc,
+      dropdownDest: dest
     }
   }
 

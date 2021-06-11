@@ -25,8 +25,8 @@
         <div class="inner">
           <mat-form-field appearance="fill">
             <mat-label>Source</mat-label>
-            <mat-select (selectionChange)="setSelectedSource(file,selectedSource, index)"
-              [(ngModel)]="selectedSource[index]">
+            <mat-select (selectionChange)="setSelectedSource(file,selectedSource)"
+              [(ngModel)]="selectedSource">
               <mat-option *ngFor="let src of source" [value]="src.value">
                 {{src.viewValue}}
               </mat-option>
@@ -36,7 +36,7 @@
         <div class="inner">
           <mat-form-field appearance="fill">
             <mat-label>Destination</mat-label>
-            <mat-select (selectionChange)="setSelectedDest(file,selectedDest, index)" [(ngModel)]="selectedDest[index]">
+            <mat-select (selectionChange)="setSelectedDest(file,selectedDest)" [(ngModel)]="selectedDest">
               <mat-option *ngFor="let dest of destination" [value]="dest.value">
                 {{dest.viewValue}}
               </mat-option>

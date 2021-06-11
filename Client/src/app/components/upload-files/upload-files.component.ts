@@ -19,8 +19,8 @@ interface Destination {
   styleUrls: ['./upload-files.component.css']
 })
 export class UploadFilesComponent implements OnInit {
-  selectedSource = ''
-  selectedDest = ''
+  selectedSource: any = []
+  selectedDest: any = []
   selectedFiles!: FileList | undefined;
   currentFile!: File | undefined | null;
   progress = 0;
@@ -57,7 +57,7 @@ export class UploadFilesComponent implements OnInit {
         this.currentFile = undefined;
       });
 
-    this.selectedFiles = undefined;
+      this.selectedFiles = undefined;
   }
 
   source: Source[] = [
@@ -84,33 +84,60 @@ export class UploadFilesComponent implements OnInit {
     dropdownDest: ''
   }
 
-  fileDetails() {
-    console.log(this.finalFileObj);
-    this.uploadService.postFile(this.finalFileObj).subscribe(response => {
+  finalArray = [
+    {
+      fileName: '',
+      dropdownSrc: '',
+      dropdownDest: ''
+    }
+  ]
+
+  fileDetails(file: any) {
+    let fileTosend = {
+      fileName: '',
+      dropdownSrc: '',
+      dropdownDest: ''
+    }
+    this.finalArray.filter(obj => {
+      if (obj.fileName == file.name) {
+        fileTosend = obj
+      }
+      if (obj.fileName == "") {
+        fileTosend.fileName = file.name
+      }
+    });
+    this.uploadService.postFile(fileTosend).subscribe(response => {
       console.log(response);
       this.finalFileObj = {
         fileName: '',
         dropdownSrc: '',
         dropdownDest: ''
       }
+      this.finalArray = [
+        {
+          fileName: '',
+          dropdownSrc: '',
+          dropdownDest: ''
+        }
+      ]
     }, error => {
       console.log(error);
 
     })
   }
 
-  setSelectedSource(file: any, source: any) {
-    this.finalFileObj = {
+  setSelectedSource(file: any, source: any, index: any) {
+    this.finalArray[index] = {
       fileName: file.name,
-      dropdownSrc: source,
-      dropdownDest: this.finalFileObj.dropdownDest
+      dropdownSrc: source[index],
+      dropdownDest: this.finalArray[index]?.dropdownDest
     }
   }
-  setSelectedDest(file: any, dest: any) {
-    this.finalFileObj = {
+  setSelectedDest(file: any, dest: any, index: any) {
+    this.finalArray[index] = {
       fileName: file.name,
-      dropdownSrc: this.finalFileObj.dropdownSrc,
-      dropdownDest: dest
+      dropdownSrc: this.finalArray[index]?.dropdownSrc,
+      dropdownDest: dest[index]
     }
   }
 

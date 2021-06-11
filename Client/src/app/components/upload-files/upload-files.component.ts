@@ -57,7 +57,7 @@ export class UploadFilesComponent implements OnInit {
         this.currentFile = undefined;
       });
 
-      this.selectedFiles = undefined;
+    this.selectedFiles = undefined;
   }
 
   source: Source[] = [
@@ -130,13 +130,13 @@ export class UploadFilesComponent implements OnInit {
     this.finalArray[index] = {
       fileName: file.name,
       dropdownSrc: source[index],
-      dropdownDest: this.finalArray[index]?.dropdownDest
+      dropdownDest: this.finalArray[index] == undefined ? '' : this.finalArray[index]?.dropdownDest,
     }
   }
   setSelectedDest(file: any, dest: any, index: any) {
     this.finalArray[index] = {
       fileName: file.name,
-      dropdownSrc: this.finalArray[index]?.dropdownSrc,
+      dropdownSrc: this.finalArray[index] == undefined ? '' : this.finalArray[index]?.dropdownSrc,
       dropdownDest: dest[index]
     }
   }
